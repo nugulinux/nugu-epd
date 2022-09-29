@@ -1,0 +1,81 @@
+name: Release
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  ubuntu:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target:
+          [
+            bionic_x64,
+            bionic_arm64,
+            bionic_armhf,
+            focal_x64,
+            focal_arm64,
+            focal_armhf,
+            jammy_x64,
+            jammy_arm64,
+            jammy_armhf
+          ]
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Build
+        run: |
+          TARGET=${{ matrix.target }}
+          DIST=(${TARGET//_/ })
+          ln -s packaging/${DIST[0]} debian
+          ls -l
+          cd ..
+          chmod 777 $PWD
+          chmod 777 $PWD/nugu-epd
+
+          echo "Build debian package"
+          docker run -t --rm --privileged -v $PWD:$PWD -w $PWD/nugu-epd \
+              -v /var/lib/schroot/chroots \
+              nugulinux/buildenv:${{ matrix.target }} sbuild.sh
+
+          ls -l
+          sudo mv *.deb nugu-epd/
+      - name: Upload
+        uses: svenstaro/upload-release-action@2.2.0
+        with:
+          file: ./*.deb
+          file_glob: true
+          repo_token: ${{ secrets.GH_TOKEN }}
+          overwrite: true
+          tag: ${{ github.ref }}
+
+  tarball_osx:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Archive the source with submodule
+        run: |
+          echo $PWD
+          ls -l
+          rm -rf .git*
+          rm -rf tyche/.git*
+          rm -rf tyche/iOS
+          rm -rf tyche/linux
+          cd ..
+          ls -l
+          tar cvfz libnugu-epd-src.tgz nugu-epd
+          cd -
+          mv ../libnugu-epd-src.tgz .
+      - name: Upload
+        uses: svenstaro/upload-release-action@2.2.0
+        with:
+          file: ./libnugu-epd-src.tgz
+          repo_token: ${{ secrets.GH_TOKEN }}
+          overwrite: true
+          tag: ${{ github.ref }}

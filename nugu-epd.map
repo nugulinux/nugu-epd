@@ -1,0 +1,14 @@
+{
+global:
+    epd_client_start;
+    epd_client_run;
+    epd_client_get_speech_boundary;
+    epd_client_save_speech_data;
+    epd_client_release;
+    epd_speex_start;
+    epd_speex_release;
+    epd_speex_run;
+    epd_speex_get_encoded_data;
+local:
+    *;
+};

@@ -1,0 +1,63 @@
+name: Merged
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  ubuntu:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target:
+          [
+            bionic_x64,
+            bionic_arm64,
+            bionic_armhf,
+            focal_x64,
+            focal_arm64,
+            focal_armhf,
+            jammy_x64,
+            jammy_arm64,
+            jammy_armhf,
+          ]
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Build
+        run: |
+          TARGET=${{ matrix.target }}
+          DIST=(${TARGET//_/ })
+          ln -s packaging/${DIST[0]} debian
+          ls -l
+          cd ..
+          chmod 777 $PWD
+          chmod 777 $PWD/nugu-epd
+
+          echo "Build debian package"
+          docker run -t --rm --privileged -v $PWD:$PWD -w $PWD/nugu-epd \
+              -v /var/lib/schroot/chroots \
+              nugulinux/buildenv:${{ matrix.target }} sbuild.sh
+
+          ls -l
+          sudo mv *.deb nugu-epd/
+      - name: Upload build artifacts to action
+        uses: actions/upload-artifact@v2
+        with:
+          path: ./*.deb
+
+  build_mac:
+    runs-on: macos-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Build
+        run: |
+          mkdir build && cd build
+          cmake ..
+          make -j3
+          DESTDIR=tmp make install

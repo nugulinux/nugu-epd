@@ -1,0 +1,5 @@
+nugu-epd (2.1.11ubuntu5~focal) focal; urgency=medium
+
+  * add speex encoding api wrapper
+
+ -- nugulinux <nugulinux@gmail.com>  Wed, 29 Sep 2021 15:00:00 +0900

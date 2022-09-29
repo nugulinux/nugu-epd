@@ -1,0 +1,41 @@
+Source: nugu-epd
+Section: libs
+Priority: optional
+Maintainer: Inho Oh <inho.oh@sk.com>
+Build-Depends: debhelper (>=10),
+	cmake,
+Standards-Version: 4.1.4
+
+Package: libnugu-epd
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: End point detector for NUGU.
+ NUGU OpenSDK
+ .
+ End point detector for NUGU.
+ .
+ The libnugu-epd package provide shared libraries.
+
+Package: libnugu-epd-dev
+Architecture: any
+Section: libdevel
+Depends: libnugu-epd, ${misc:Depends}
+Description: End point detector for NUGU. (development files)
+ NUGU OpenSDK
+ .
+ End point detector for NUGU.
+ .
+ The libnugu-epd-dev package provide development files.
+
+Package: libnugu-epd-dbg
+Section: debug
+Priority: optional
+Architecture: any
+Depends: libnugu-epd (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Description: End point detector for NUGU. (debugging symbols)
+ NUGU OpenSDK
+ .
+ End point detector for NUGU.
+ .
+ The libnugu-epd-dbg package provide debugging symbols.
+

@@ -1,0 +1,3 @@
+[submodule "tyche"]
+	path = tyche
+	url = https://github.com/nugu-developers/tyche.git

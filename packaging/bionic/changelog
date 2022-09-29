@@ -1,0 +1,36 @@
+nugu-epd (2.1.11ubuntu5~bionic) bionic; urgency=medium
+
+  * add speex encoding api wrapper
+
+ -- nugulinux <nugulinux@gmail.com>  Wed, 15 Sep 2021 11:30:00 +0900
+
+nugu-epd (2.1.11ubuntu4~bionic) bionic; urgency=medium
+
+  * add input/output data type to epd_param
+
+ -- nugulinux <nugulinux@gmail.com>  Tue, 31 Aug 2021 18:30:00 +0900
+
+nugu-epd (2.1.11ubuntu2~bionic) bionic; urgency=medium
+
+  * Support Tizen Platform
+  * Support Linkplay.A98 Platform
+
+ -- nugulinux <nugulinux@gmail.com>  Tue, 31 Mar 2020 11:30:00 +0900
+
+nugu-epd (2.1.10ubuntu2~bionic) bionic; urgency=medium
+
+  * fix bugs.
+
+ -- nugulinux <nugulinux@gmail.com>  Thu, 05 Dec 2019 11:40:00 +0900
+
+nugu-epd (2.1.8ubuntu1~bionic) bionic; urgency=medium
+
+  * fix bugs.
+
+ -- nugulinux <nugulinux@gmail.com>  Mon, 25 Mar 2019 18:24:00 +0900
+
+nugu-epd (2.1.5ubuntu2~bionic) bionic; urgency=medium
+
+  * Initial release.
+
+ -- nugulinux <nugulinux@gmail.com>  Mon, 25 Mar 2019 11:07:59 +0900
