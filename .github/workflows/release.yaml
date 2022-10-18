@@ -23,7 +23,7 @@ jobs:
           ]
     steps:
       - name: Check out the repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           submodules: true
       - name: Build
@@ -44,7 +44,7 @@ jobs:
           ls -l
           sudo mv *.deb nugu-epd/
       - name: Upload
-        uses: svenstaro/upload-release-action@2.2.0
+        uses: svenstaro/upload-release-action@v2
         with:
           file: ./*.deb
           file_glob: true
@@ -56,7 +56,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           submodules: true
       - name: Archive the source with submodule
@@ -73,7 +73,7 @@ jobs:
           cd -
           mv ../libnugu-epd-src.tgz .
       - name: Upload
-        uses: svenstaro/upload-release-action@2.2.0
+        uses: svenstaro/upload-release-action@v2
         with:
           file: ./libnugu-epd-src.tgz
           repo_token: ${{ secrets.GH_TOKEN }}
