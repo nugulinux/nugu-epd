@@ -7,12 +7,12 @@ add_library(${TARGET_LIB} SHARED ${SRC})
 if(CMAKE_SYSTEM_NAME MATCHES "Darwin")
 	target_link_libraries(${TARGET_LIB} PRIVATE
 		-lstdc++
-		-L${CMAKE_SOURCE_DIR}/${TYCHE}/Libraries
+		-L${PROJECT_SOURCE_DIR}/${TYCHE}/Libraries
 		-lTycheEpd -lTycheCommon -lTycheSpeex)
 else()
 	target_link_libraries(${TARGET_LIB} PRIVATE
-		-Wl,--version-script=${CMAKE_SOURCE_DIR}/nugu-epd.map
-		-L${CMAKE_SOURCE_DIR}/${TYCHE}/Libraries
+		-Wl,--version-script=${PROJECT_SOURCE_DIR}/nugu-epd.map
+		-L${PROJECT_SOURCE_DIR}/${TYCHE}/Libraries
 		-lTycheEpd -lTycheCommon -lTycheSpeex)
 endif()
 

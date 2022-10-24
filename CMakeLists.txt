@@ -40,5 +40,5 @@ add_subdirectory(src)
 install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nugu-epd/)
 
 # Install pkgconfig
-configure_file(nugu-epd.pc.in ${CMAKE_BINARY_DIR}/nugu-epd.pc @ONLY)
-install(FILES ${CMAKE_BINARY_DIR}/nugu-epd.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig/)
+configure_file(nugu-epd.pc.in ${PROJECT_BINARY_DIR}/nugu-epd.pc @ONLY)
+install(FILES ${PROJECT_BINARY_DIR}/nugu-epd.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig/)
