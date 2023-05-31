@@ -23,8 +23,17 @@ if(CMAKE_SYSTEM_NAME MATCHES "Linux")
 	else()
 		message(SEND_ERROR "not supported library architecture - ${CMAKE_LIBRARY_ARCHITECTURE}")
 	endif()
+
+	# RPATH is useful only for testing without installation.
+	# Please use the '-DPACKAGING' option for debian packaging.
+	if (NOT PACKAGING)
+		link_libraries(-Wl,--rpath=${PROJECT_BINARY_DIR}/src)
+	endif()
 elseif(CMAKE_SYSTEM_NAME MATCHES "Darwin")
 	set(TYCHE "tyche/macOS")
+	if (NOT PACKAGING)
+		link_libraries(-Wl,-rpath,${PROJECT_BINARY_DIR}/src)
+	endif()
 else()
 	message(SEND_ERROR "not supported system - ${CMAKE_SYSTEM_NAME}")
 endif()
@@ -35,6 +44,7 @@ message("* Tyche path: ${TYCHE}")
 include_directories(include ${TYCHE}/Libraries/include)
 
 add_subdirectory(src)
+add_subdirectory(test)
 
 # Install header files
 install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nugu-epd/)
