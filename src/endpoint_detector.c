@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <sys/stat.h>
 #include <errno.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/stat.h>
 
 #include "endpoint_detector.h"
 #include "libEpdApi.h"
@@ -42,26 +42,56 @@ int epd_client_start(const char *model_file, EpdParam param)
 	}
 
 	if (epd_handle != NULL)
-		epd_client_release(epd_handle);
+		epdClientChannelRELEASE(epd_handle);
 
 	epd_handle = epdClientChannelSTART(model_file, param.sample_rate,
 					   param.input_type, param.output_type,
-					   1, param.max_speech_duration,
-					   param.time_out, param.pause_length);
+					   1, param.max_speech_duration_secs,
+					   param.time_out_secs,
+					   param.pause_length_msecs);
 
 	return (epd_handle == NULL) ? -1 : 0;
 }
 
-EpdStatus epd_client_run(char *out_data, int *out_size, short *data, int size)
+EpdStatus epd_client_run(char *data, int size)
 {
 	if (epd_handle == NULL)
 		return EPD_INVALID_HANDLE;
 
-	int result = epdClientChannelRUN(epd_handle, data, size, 0);
-	*out_size =
-		epdClientChannelGetOutputData(epd_handle, out_data, *out_size);
+	return (EpdStatus)epdClientChannelRUN(epd_handle, (short *)data, size,
+					      0);
+}
 
-	return (EpdStatus)result;
+int epd_client_get_output_size(void)
+{
+	if (epd_handle == NULL)
+		return -1;
+
+	return epdClientChannelGetOutputDataSize(epd_handle);
+}
+
+int epd_client_get_output(char *buffer, int buffer_size)
+{
+	if (epd_handle == NULL)
+		return -1;
+
+	return epdClientChannelGetOutputData(epd_handle, buffer, buffer_size);
+}
+
+int epd_client_get_msec_start_detect(void)
+{
+	if (epd_handle == NULL)
+		return -1;
+
+	return epdClientGetSpeechStartDetectPoint(epd_handle);
+}
+
+int epd_client_get_msec_end_detect(void)
+{
+	if (epd_handle == NULL)
+		return -1;
+
+	return epdClientGetSpeechEndDetectPoint(epd_handle);
 }
 
 int epd_client_get_speech_boundary(int *start_time, int *end_time)
@@ -81,7 +111,12 @@ int epd_client_save_speech_data(const char *path, const char *file)
 	return epdClientSaveRecordedSpeechData(epd_handle, path, file);
 }
 
-int epd_client_release()
+void epd_client_set_log(int enable)
+{
+	epdClientSetDebugOutput(enable);
+}
+
+int epd_client_release(void)
 {
 	if (epd_handle == NULL)
 		return -1;

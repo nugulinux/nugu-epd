@@ -2,9 +2,14 @@
 global:
     epd_client_start;
     epd_client_run;
+    epd_client_release;
+    epd_client_set_log;
+    epd_client_get_output_size;
+    epd_client_get_output;
+    epd_client_get_msec_start_detect;
+    epd_client_get_msec_end_detect;
     epd_client_get_speech_boundary;
     epd_client_save_speech_data;
-    epd_client_release;
     epd_speex_start;
     epd_speex_release;
     epd_speex_run;
