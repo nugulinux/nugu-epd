@@ -1,3 +1,10 @@
+nugu-epd (2.1.11ubuntu7~jammy) jammy; urgency=medium
+
+  * Fixed EPD API to fit the tyche library
+  * Added test app for EPD result analysis
+
+ -- nugulinux <nugulinux@gmail.com>  Wed, 30 Aug 2023 14:30:00 +0900
+
 nugu-epd (2.1.11ubuntu6~jammy) jammy; urgency=medium
 
   * Updated Github action version
