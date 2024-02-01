@@ -3,17 +3,13 @@ on: pull_request
 
 jobs:
   checkpatch_review:
-    runs-on: ubuntu-latest
-    steps:
-      - name: 'Calculate PR commits + 1'
-        run: echo "PR_FETCH_DEPTH=$(( ${{ github.event.pull_request.commits }} + 1 ))" >> $GITHUB_ENV
-      - name: Check out the repo
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          fetch-depth: ${{ env.PR_FETCH_DEPTH }}
-      - name: Run checkpatch review
-        uses: webispy/checkpatch-action@v9
+    uses: nugulinux/.github/.github/workflows/checkpatch.yml@master
+    with:
+      commits: ${{ github.event.pull_request.commits }}
+      head_sha: ${{ github.event.pull_request.head.sha }}
+    secrets:
+      gh_token: ${{ secrets.gh_token }}
+
   ubuntu:
     runs-on: ubuntu-latest
     needs: [checkpatch_review]
@@ -33,7 +29,7 @@ jobs:
           ]
     steps:
       - name: Check out the repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           submodules: true
       - name: Build
@@ -59,7 +55,7 @@ jobs:
     needs: [checkpatch_review]
     steps:
       - name: Check out the repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           submodules: true
       - name: Build

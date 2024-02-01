@@ -23,7 +23,7 @@ jobs:
           ]
     steps:
       - name: Check out the repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           submodules: true
       - name: Build
@@ -44,15 +44,16 @@ jobs:
           ls -l
           sudo mv *.deb nugu-epd/
       - name: Upload build artifacts to action
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
+          name: deb-${{ matrix.target }}
           path: ./*.deb
 
   build_mac:
     runs-on: macos-latest
     steps:
       - name: Check out the repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           submodules: true
       - name: Build
