@@ -19,7 +19,10 @@ jobs:
             focal_armhf,
             jammy_x64,
             jammy_arm64,
-            jammy_armhf
+            jammy_armhf,
+            noble_x64,
+            noble_arm64,
+            noble_armhf,
           ]
     steps:
       - name: Check out the repo
