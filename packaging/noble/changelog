@@ -1,0 +1,6 @@
+nugu-epd (2.1.11ubuntu7~noble) noble; urgency=medium
+
+  * Fixed EPD API to fit the tyche library
+  * Added test app for EPD result analysis
+
+ -- nugulinux <nugulinux@gmail.com>  Wed, 26 Jun 2024 10:30:00 +0900
